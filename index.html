@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FrontTest | RLT</title>
+	<link rel="stylesheet" href="/css/main.css">
+	<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+	<script defer src="/js/InertiaPlugin.min.js"></script>
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.34/vue.global.prod.min.js"></script>
+	<script defer src="/js/main.js"></script>
+</head>
+<body>
+	<div class="inventory">
+		<div class="sidebar block">	
+			<img src="/images/img-blur.png" alt="Голубая картинка">	
+			<div class="sidebar__text">
+				<div class="heading loading"></div>
+				<div class="para loading"></div>
+				<div class="para loading"></div>
+				<div class="para loading"></div>
+				<div class="para loading"></div>
+				<div class="para loading"></div>
+				<div class="para loading"></div>
+			</div>	
+		</div>
+		<div id="app" class="app block">	
+			<div class="box" v-for="box in 25"></div>	
+			<div 
+				v-for="(elem, index) in elemsArr" 
+				:key="index"
+				@click="ElemClicked(index)"
+				class="app__elem"
+			>
+				<img :src="`/images/${elem.img}.png`" alt="">
+				<div class="app__elem-number">{{ elem.number}}</div>
+			</div>	
+			<div class="app__dialog" :class="{show: isDialogToggled}">
+				<div class="app__dialog-img">
+					<img :src="`/images/${elemsArr[elem_index].img}.png`" alt="">
+				</div>
+				<div class="app__dialog-text">
+					<div class="heading loading"></div>
+					<div v-for="para in 5" class="para loading"></div>					
+				</div>
+				<div class="app__dialog-form-wrap" :class="{expanded: isFormToggled}">
+					<button 
+					v-if="!isFormToggled" 
+					@click="ToggleForm"
+					class="btn-form pink pink--big"
+					>Удалить предмет</button>
+					<form v-else>
+						<input type="number" min="0" v-model="number" placeholder="Введите количество">
+						<div class="btns">
+							<button
+								type="button"
+								@click.prevent="CancelClicked" 
+								class="btn-form light"
+							>Отмена</button>
+							<button 
+								type="submit" 
+								class="btn-form pink pink--small"
+								@click.prevent="ToggleDialog"
+							>Подтвердить</button>
+						</div>
+					</form>
+				</div>
+				<button ref="btn_close" class="btn-close" @click="ToggleDialog">
+					<img src="/images/svg/close.svg" alt="">
+				</button>
+			</div>
+		</div>
+		<div class="footer block">
+			<div class="loading"></div>
+			<button class="btn-close">
+				<img src="/images/svg/close.svg" alt="">
+			</button>
+		</div>
+	</div>
+	
+</body>
+</html>
